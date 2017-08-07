@@ -76,6 +76,14 @@ server {
         # Increase client_max_body_size to match max_upload_size defined in homeserver.yaml
         client_max_body_size 50M;
     }
+    # in case you want to enable websocket support
+    location /_matrix/client/ws {
+        proxy_pass http://localhost:8008/_matrix/client/ws;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }
 }
 ```
 
